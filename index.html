@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Probearbeit MCL: Todo-Rest-Api</title>
+        <link rel="stylesheet" href="lib/Bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="lib/jQuery/jquery.ui.min.css" />
+        <link rel="stylesheet" href="css/todo.css" />
+        <script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/Bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/jQuery/jquery.ui.min.js"></script>
+        <script type="text/javascript" src="js/todo.js"></script>
+
+        <script type="text/javascript">
+            todo.init();
+        </script>
+    </head>
+
+    <body>
+        <div id="container">
+            <div class="task-list">
+                <h3>Todo hinzufügen</h3>
+                <form class="todo-form">
+                    <input id="betreff" type="text" placeholder="Betreff" />
+                    <textarea id="beschreibung" placeholder="Beschreibung"></textarea>
+                    <input style="display: none;" type="text" id="date"/>
+                    <input id="addButton" type="button" class="btn btn-primary" value="Todo hinzufügen" onclick="todo.add();" />
+                </form>
+
+                <input id="removeList" type="button" class="btn btn-primary" value="Gesamte Todo-Liste löschen" onclick="todo.clear();" />
+            </div>
+            <div class="task-list task-container" id="todo-list">
+                <h3>Todo's</h3>
+            </div>
+
+            <div style="clear:both;"></div>
+        </div>
+    </body>
+</html>
