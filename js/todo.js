@@ -26,9 +26,10 @@ var heute = d + '.' + m + '.' + y;
         options = options || {};
         options = $.extend({}, defaults, options);
 
-        $.get("phpbackend/index.php",
+        $.get("phpbackend/backend.php",
 		{getAll : "getTodoList"}, 
 		function(phpdata){
+                        console.log(phpdata);
 			if(phpdata!=""){
 				data = JSON.parse(phpdata);
 				$.each(data, function (index, params) {
@@ -84,7 +85,7 @@ var heute = d + '.' + m + '.' + y;
     // Todo löschen
     todo.removeElement = function (paramsid) {
 		$.post(
-            'phpbackend/index.php',
+            'phpbackend/backend.php',
             {remove: paramsid}
         );
         
@@ -119,7 +120,7 @@ var heute = d + '.' + m + '.' + y;
         data[id] = tempData;
 		
 		$.post(
-            'phpbackend/index.php',
+            'phpbackend/backend.php',
             { add: JSON.stringify(data)}
         );
 		
@@ -132,7 +133,7 @@ var heute = d + '.' + m + '.' + y;
 
     todo.clear = function () {
         $.post(
-            'phpbackend/index.php',
+            'phpbackend/backend.php',
             {clear: true}
         );
         
