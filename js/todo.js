@@ -1,7 +1,5 @@
-var todo = todo || {},
-        data = JSON.parse(localStorage.getItem("todoDaten"));
-
-data = data || {};
+var todo = todo || {};
+var data = data || {};
 
 var date = new Date();
 var d = date.getDate();
@@ -28,9 +26,16 @@ var heute = d + '.' + m + '.' + y;
         options = options || {};
         options = $.extend({}, defaults, options);
 
-        $.each(data, function (index, params) {
-            generateElement(params);
-        });
+        $.get("phpbackend/index.php",
+		{getAll : "getTodoList"}, 
+		function(phpdata){
+			if(phpdata!=""){
+				data = JSON.parse(phpdata);
+				$.each(data, function (index, params) {
+					generateElement(params);
+				});
+			}
+		});
     };
 
     // Todo hinzufügen
@@ -78,8 +83,11 @@ var heute = d + '.' + m + '.' + y;
     
     // Todo löschen
     todo.removeElement = function (paramsid) {
-        data = {};
-        localStorage.setItem("todoDaten", JSON.stringify(data));
+		$.post(
+            'phpbackend/index.php',
+            {remove: paramsid}
+        );
+        
         $("#" + defaults.taskId + paramsid).remove();
     };
     
@@ -100,7 +108,7 @@ var heute = d + '.' + m + '.' + y;
         date = inputs[2].value;
 
         id = new Date().getTime();
-
+		data = {};
         tempData = {
             id: id,
             code: "1",
@@ -109,7 +117,12 @@ var heute = d + '.' + m + '.' + y;
             description: description
         };
         data[id] = tempData;
-        localStorage.setItem("todoDaten", JSON.stringify(data));
+		
+		$.post(
+            'phpbackend/index.php',
+            { add: JSON.stringify(data)}
+        );
+		
         generateElement(tempData);
         inputs[0].value = "";
         inputs[1].value = "";
@@ -118,8 +131,11 @@ var heute = d + '.' + m + '.' + y;
     };
 
     todo.clear = function () {
-        data = {};
-        localStorage.setItem("todoDaten", JSON.stringify(data));
+        $.post(
+            'phpbackend/index.php',
+            {clear: true}
+        );
+        
         $("." + defaults.todoTask).remove();
     };
 
